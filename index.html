@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Housewell Request</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="https://via.placeholder.com/100" alt="Housewell Logo" class="logo" />
+      <h1>Welcome, Amy</h1>
+      <p>Your private Housewell request portal</p>
+    </header>
+
+    <form id="request-form">
+      <label for="task">What would you like me to take care of?</label>
+      <textarea id="task" name="task" rows="4" required></textarea>
+
+      <label for="urgency">How urgent is this?</label>
+      <select id="urgency" name="urgency" required>
+        <option value="normal">Normal</option>
+        <option value="soon">Soon</option>
+        <option value="urgent">Urgent</option>
+      </select>
+
+      <button type="submit">Send My Request</button>
+    </form>
+
+    <div id="confirmation" class="hidden">
+      <h2>Thank you, Amy!</h2>
+      <p>Your request has been sent. I’ll follow up shortly.</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('request-form');
+    const confirmation = document.getElementById('confirmation');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const task = document.getElementById('task').value;
+      const urgency = document.getElementById('urgency').value;
+
+      const response = await fetch('/.netlify/functions/send-text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task, urgency }),
+      });
+
+      if (response.ok) {
+        form.classList.add('hidden');
+        confirmation.classList.remove('hidden');
+      } else {
+        alert('Something went wrong sending your request.');
+      }
+    });
+  </script>
+</body>
+</html>

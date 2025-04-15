@@ -1,0 +1,3 @@
+[build]
+  publish = "."                    # This tells Netlify to serve index.html from the root folder
+  functions = "netlify/functions" # This tells Netlify where to find your functions
