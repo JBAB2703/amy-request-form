@@ -8,6 +8,7 @@ exports.handler = async (event) => {
     task = data.task;
     urgency = data.urgency;
   } catch (err) {
+    console.log("❌ Failed to parse JSON", err.message);
     return {
       statusCode: 400,
       body: JSON.stringify({ error: 'Invalid or missing JSON body' }),
@@ -21,20 +22,24 @@ exports.handler = async (event) => {
   const message = `🛠️ Housewell Request from Amy:\n\nTask: ${task}\nUrgency: ${urgency}`;
 
   try {
-    await client.messages.create({
+    const result = await client.messages.create({
       body: message,
       from: process.env.TWILIO_PHONE_NUMBER,
       to: process.env.MY_PHONE_NUMBER,
     });
+
+    console.log("✅ Message sent:", result.sid);
 
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true }),
     };
   } catch (err) {
+    console.log("❌ Failed to send message:", err.message);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message }),
     };
   }
 };
+
