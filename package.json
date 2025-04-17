@@ -1,6 +1,6 @@
 {
     "dependencies": {
-      "twilio": "^4.0.0"
+        "@sendgrid/mail": "^8.1.5",
+        "twilio": "^4.0.0"
     }
-  }
-  
+}
