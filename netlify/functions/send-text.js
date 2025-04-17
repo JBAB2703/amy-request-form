@@ -1,45 +1,30 @@
-const twilio = require('twilio');
+const sgMail = require('@sendgrid/mail');
 
 exports.handler = async (event) => {
-  let task, urgency;
-
   try {
     const data = JSON.parse(event.body);
-    task = data.task;
-    urgency = data.urgency;
-  } catch (err) {
-    console.log("❌ Failed to parse JSON", err.message);
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: 'Invalid or missing JSON body' }),
+    const { task, urgency } = data;
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+    const msg = {
+      to: 'jkylecarpentry@gmail.com', // Replace with your receiving address
+      from: 'jkylecarpentry@gmail.com', // Must match verified sender in SendGrid
+      subject: `New Housewell Request: ${urgency} Urgency`,
+      text: `Task: ${task}\nUrgency: ${urgency}`,
     };
-  }
 
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const client = twilio(accountSid, authToken);
-
-  const message = `🛠️ Housewell Request from Amy:\n\nTask: ${task}\nUrgency: ${urgency}`;
-
-  try {
-    const result = await client.messages.create({
-      body: message,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: process.env.MY_PHONE_NUMBER,
-    });
-
-    console.log("✅ Message sent:", result.sid);
+    await sgMail.send(msg);
 
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true }),
     };
   } catch (err) {
-    console.log("❌ Failed to send message:", err.message);
+    console.error('SendGrid Error:', err);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message }),
     };
   }
 };
-
