@@ -8,8 +8,9 @@ exports.handler = async (event) => {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     const msg = {
-      to: 'jkylecarpentry@gmail.com', // Verified email address
-      from: 'jkylecarpentry@gmail.com', // Must match verified sender in SendGrid
+      to: 'jesse@housewellservices.com', // Verified email address
+      from: 'noreply@housewellservices.com', // Must match verified sender in SendGrid
+      replyTo: 'jesse@housewellservices.com',
       subject: `New Housewell Request: ${urgency} Urgency`,
       text: `Task: ${task}\nUrgency: ${urgency}`,
     };
