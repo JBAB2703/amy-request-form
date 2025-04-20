@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Housewell Admin Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0 1rem;
+      background-color: #f4f4f4;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 2px solid #ccc;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    select {
+      padding: 0.4rem;
+      font-size: 1rem;
+    }
+    section {
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Housewell Admin Portal</h1>
+    <div>
+      <label for="clientSelect">Select Client:</label>
+      <select id="clientSelect">
+        <option value="">-- Choose Client --</option>
+        <!-- Populated by JS -->
+      </select>
+    </div>
+  </header>
+
+  <section id="requestsSection">
+    <div class="section-header">
+      <h2>Request Log</h2>
+      <span id="requestStatus"></span>
+    </div>
+    <table id="requestTable">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Timestamp</th>
+          <th>Task</th>
+          <th>Urgency</th>
+          <th>Submitted By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Populated by JS -->
+      </tbody>
+    </table>
+  </section>
+
+  <section id="inventorySection">
+    <div class="section-header">
+      <h2>Home Inventory</h2>
+      <button id="addInventoryBtn">+ Add Item</button>
+    </div>
+    <table id="inventoryTable">
+      <thead>
+        <tr>
+          <th>Room</th>
+          <th>Item</th>
+          <th>Model</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Populated by JS -->
+      </tbody>
+    </table>
+  </section>
+
+  <script src="scripts/admin.js"></script>
+</body>
+</html>
